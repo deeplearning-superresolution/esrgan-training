@@ -3,6 +3,8 @@ import glob
 import os
 from os import path as osp
 
+from util import download_file_from_google_drive
+
 
 def download_dataset(dataset, file_ids):
     save_path_root = './datasets/'
@@ -13,12 +15,16 @@ def download_dataset(dataset, file_ids):
         if osp.exists(save_path):
             user_response = input(
                 f'{file_name} already exist. Do you want to cover it? Y/N\n')
-            
+            if user_response.lower() == 'y':
+                print(f'Covering {file_name} to {save_path}')
+                download_file_from_google_drive(file_id, save_path)
             elif user_response.lower() == 'n':
                 print(f'Skipping {file_name}')
             else:
                 raise ValueError('Wrong input. Only accpets Y/N.')
-        
+        else:
+            print(f'Downloading {file_name} to {save_path}')
+            download_file_from_google_drive(file_id, save_path)
 
         # unzip
         if save_path.endswith('.zip'):
