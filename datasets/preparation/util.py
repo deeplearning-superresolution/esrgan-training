@@ -33,7 +33,7 @@ def download_file_from_google_drive(file_id, save_path):
 
     save_response_content(response, save_path, file_size)
 
-    def get_confirm_token(response):
+def get_confirm_token(response):
     for key, value in response.cookies.items():
         if key.startswith('download_warning'):
             return value
